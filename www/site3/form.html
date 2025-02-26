@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulaire GET</title>
+</head>
+<body>
+    <h2>Formulaire d'Informations</h2>
+    
+    <form action="formul.php" method="get">
+        <!-- Nom et Âge -->
+        <label for="nom">Nom :</label>
+        <input type="text" id="nom" name="nom" required>
+        <br>
+
+        <label for="age">Âge :</label>
+        <input type="number" id="age" name="age" required>
+        <br>
+
+        <!-- Situation maritale -->
+        <fieldset>
+            <legend>Situation maritale :</legend>
+            <input type="radio" id="celibataire" name="marit" value="célibataire" required>
+            <label for="celibataire">Célibataire</label>
+
+            <input type="radio" id="marie" name="marit" value="marié(e)">
+            <label for="marie">Marié(e)</label>
+
+            <input type="radio" id="divorce" name="marit" value="divorcé(e)">
+            <label for="divorce">Divorcé(e)</label>
+        </fieldset>
+
+        <!-- Centres d'intérêt -->
+        <fieldset>
+            <legend>Centres d'intérêt :</legend>
+            <input type="checkbox" id="internet" name="interet[]" value="internet">
+            <label for="internet">Internet</label>
+
+            <input type="checkbox" id="micro" name="interet[]" value="micro">
+            <label for="micro">Micro-informatique</label>
+
+            <input type="checkbox" id="jeux" name="interet[]" value="jeux">
+            <label for="jeux">Jeux vidéo</label>
+        </fieldset>
+
+        <!-- Boutons (non nommés) -->
+        <br>
+        <input type="submit" value="Envoyer">
+        <input type="reset" value="Recommencer">
+    </form>
+</body>
+</html>
