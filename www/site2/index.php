@@ -3,6 +3,9 @@ session_start();
 
 $_SESSION['isConnected'] = 'On';
 
+//recuperation de la classe
+require_once 'userClass.php';
+
 // Connexion à la base de données
 $host = 'mysql';
 $dbname = 'letscook_php_db';
@@ -17,21 +20,27 @@ try {
     echo "Erreur de connexion : " . $e->getMessage();
 }
 
+// Initialisation de l'objet 
+$superUser = new User($pdo);
 
-try {
-    $stmt = $pdo->prepare("SELECT * FROM user");
-    $stmt->execute();
+// Recuperes tous les utilisateurs
+$rows = $superUser->getAllUsers();
 
-    // Récupérer les résultats
-    $resultats = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    // var_dump($resultats);
-    $rows = $resultats;
-    // foreach ($resultats as $row) {
-    //     // Traiter chaque ligne de résultat
-    // }
-} catch (PDOException $e) {
-    echo "Erreur de lecture : " . $e->getMessage();
-}
+
+// try {
+//     $stmt = $pdo->prepare("SELECT * FROM user");
+//     $stmt->execute();
+
+//     // Récupérer les résultats
+//     $resultats = $stmt->fetchAll(PDO::FETCH_ASSOC);
+//     // var_dump($resultats);
+//     $rows = $resultats;
+//     // foreach ($resultats as $row) {
+//     //     // Traiter chaque ligne de résultat
+//     // }
+// } catch (PDOException $e) {
+//     echo "Erreur de lecture : " . $e->getMessage();
+// }
 
 
 ?>
@@ -42,7 +51,7 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css?v=<?php echo time(); ?>">
     <title>Document</title>
 </head>
 
@@ -62,7 +71,7 @@ try {
         <tr>
             <th>id</th>
             <th>First Name</th>
-            <th>Last Nime</th>
+            <th>Last Name</th>
             <th>Email</th>
             <th>Password</th>
             <th>Role</th>
@@ -81,7 +90,8 @@ try {
                 <td><?php echo $row['password'] ?></td>
                 <td><?php echo $row['role'] ?></td>
                 <td><?php echo $row['created_at'] ?></td>
-                <td><a id="name" href="delete.php?id=<?php echo $row['id'] ?>">Supprimer</a></td>
+                <td><a id="name" class="button" href="delete.php?id=<?php echo $row['id'] ?>">Supprimer</a></td>
+                <td><a id="name" class="button" href="update.php?id=<?php echo $row['id'] ?>">Editer</a></td>
 
             </tr>
 
@@ -107,7 +117,7 @@ try {
         <input type="password" name="password" id="password" placeholder="....."><br>
         <label for="role">Role</label>
         <input type="text" name="role" id="role"><br>
-        <button type="submit" value="Create">Create User</button>
+        <button type="submit" value="Create">CREATION DU PROFIL</button>
     </form>
     <!-- <a href="create_user.php?test=abc">test</a> -->
 

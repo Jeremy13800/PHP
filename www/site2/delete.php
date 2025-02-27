@@ -2,7 +2,7 @@
 session_start();
 
 $_SESSION['isConnected'] = 'On';
-if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id'])):
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id'])) {
     // Connexion à la base de données
     $host = 'mysql';
     $dbname = 'letscook_php_db';
@@ -31,5 +31,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id'])):
     } catch (PDOException $e) {
         echo "Erreur de suppression : " . $e->getMessage();
     }
-
-endif;
+}

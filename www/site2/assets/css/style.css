@@ -6,15 +6,89 @@
 
 body {
   font-family: Arial, sans-serif;
-  background-color: #f2f2f2;
+  background-color: black;
+  color: white;
+}
+
+header {
+  padding: 20px;
+  text-align: center;
+}
+
+nav a {
+  text-decoration: none;
+  list-style-type: none;
+  padding: 10px;
+  color: white;
+  transition: 0.3s;
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  &:hover {
+    background-color: #4caf50;
+    color: white;
+  }
+  &:active {
+    background-color: #45a049;
+    color: white;
+    transform: translateY(2px);
+  }
+  &:focus {
+    outline: none;
+  }
+  &:visited {
+    color: white;
+  }
+  &:disabled {
+    color: gray;
+    cursor: not-allowed;
+  }
+}
+
+li {
+  display: inline;
+  margin: 10px;
+  transition: 0.3s;
+}
+
+h1 {
+  text-align: center;
+  margin: 20px;
+  color: white;
+  font-size: 32px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px #000000;
+  text-decoration: underline;
+  text-decoration-color: #4caf50;
+  text-decoration-thickness: 2px;
+  text-decoration-style: solid;
+  text-decoration-line: underline;
+  animation: underline 2s infinite;
+}
+
+h2 {
+  text-align: center;
+  margin: 20px;
+  color: white;
 }
 
 table {
   border: 1px solid black;
   width: 80%;
   text-align: center;
+  font-weight: bold;
   margin: auto;
-  background-color: turquoise;
+  background-color: #f2f2f2;
+  color: black;
+  border-collapse: collapse;
+  animation: tableAnimation 2s infinite;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  transition: 0.3s;
 }
 
 th,
@@ -32,8 +106,27 @@ form {
   margin: auto;
   text-align: left;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  border-radius: 5px;
+  border-radius: 10px;
   transition: 0.3s;
+}
+
+.button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: 0.3s;
+  margin-top: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  &:hover {
+    background-color: #45a049;
+    color: white;
+  }
 }
 
 label {

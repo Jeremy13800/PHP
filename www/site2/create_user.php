@@ -70,8 +70,8 @@ else :
     echo "Formulaire non soumis";
 endif;
 
-header('Location: index.php');
-exit;
+// header('Location: index.php');
+// exit;
 
 
 ?>;
