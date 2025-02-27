@@ -4,19 +4,7 @@ session_start();
 $_SESSION['isConnected'] = 'On';
 
 // Connexion à la base de données
-$host = 'mysql';
-$dbname = 'letscook_php_db';
-$username = 'root';
-$password = 'root';
-
-try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password, [
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-    ]);
-} catch (PDOException $e) {
-    echo "Erreur de connexion : " . $e->getMessage();
-}
+require 'Database.php';
 
 // Vérifier si un ID est passé dans l'URL
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {

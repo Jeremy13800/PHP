@@ -7,18 +7,7 @@ $_SESSION['isConnected'] = 'On';
 require_once 'userClass.php';
 
 // Connexion à la base de données
-$host = 'mysql';
-$dbname = 'letscook_php_db';
-$username = 'root';
-$password = 'root';
-
-try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
-    // Définit le mode d'erreur PDO sur exception
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    echo "Erreur de connexion : " . $e->getMessage();
-}
+require 'Database.php';
 
 // Initialisation de l'objet 
 $superUser = new User($pdo);
@@ -35,6 +24,8 @@ $rows = $superUser->getAllUsers();
 //     $resultats = $stmt->fetchAll(PDO::FETCH_ASSOC);
 //     // var_dump($resultats);
 //     $rows = $resultats;
+// fermeture de la connextion
+$pdo = null;
 //     // foreach ($resultats as $row) {
 //     //     // Traiter chaque ligne de résultat
 //     // }
@@ -51,13 +42,13 @@ $rows = $superUser->getAllUsers();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="assets/css/style.css?v=<?php echo time(); ?>">
+    <?php require 'inc/styles.php' ?>
     <title>Document</title>
 </head>
 
 <body>
     <?php
-    var_dump(__DIR__);
+
     include 'inc/header.php'; ?>
 
     <h1>
@@ -122,6 +113,12 @@ $rows = $superUser->getAllUsers();
     <!-- <a href="create_user.php?test=abc">test</a> -->
 
     <?php
+
+    if ($pdo) {
+        echo " connexion ouverte";
+    } else {
+        echo " connexion fermee";
+    }
 
     include 'inc/footer.php'
     ?>
