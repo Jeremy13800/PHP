@@ -6,52 +6,65 @@ $_SESSION['isConnected'] = 'On';
 // Connexion à la base de données
 require 'Database.php';
 
+//recuperation de la classe
+require_once 'userClass.php';
+
+// Initialisation de l'objet 
+$superUser = new User($pdo);
+
 // Vérifier si un ID est passé dans l'URL
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
     die("ID utilisateur invalide.");
 }
 
 $id = intval($_GET['id']);
+$user = $superUser->getUserById($id);
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $superUser->updateUser($id, $_POST['first_name'], $_POST['last_name'], $_POST['email'], $_POST['password'], $_POST['role']);
+    header("Location: index.php");
+    exit;
+}
 
 // Récupérer les données actuelles de l'utilisateur
-$user = null;
-try {
-    $stmt = $pdo->prepare("SELECT * FROM user WHERE id = :id");
-    $stmt->bindValue(':id', $id, PDO::PARAM_INT);
-    $stmt->execute();
-    $user = $stmt->fetch();
+// $user = null;
+// try {
+//     $stmt = $pdo->prepare("SELECT * FROM user WHERE id = :id");
+//     $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+//     $stmt->execute();
+//     $user = $stmt->fetch();
 
-    if (!$user) {
-        die("Utilisateur non trouvé.");
-    }
-} catch (PDOException $e) {
-    die("Erreur lors de la récupération des données : " . $e->getMessage());
-}
+//     if (!$user) {
+//         die("Utilisateur non trouvé.");
+//     }
+// } catch (PDOException $e) {
+//     die("Erreur lors de la récupération des données : " . $e->getMessage());
+// }
 
-// Si le formulaire est soumis
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST['first_name'], $_POST['last_name'], $_POST['email'], $_POST['role'])) {
-        try {
-            $stmt = $pdo->prepare("UPDATE user SET first_name = :first_name, last_name = :last_name, email = :email,password = :password ,role = :role WHERE id = :id");
-            $stmt->bindValue(':id', intval($_POST['id']), PDO::PARAM_INT);
-            $stmt->bindValue(':first_name', $_POST['first_name'], PDO::PARAM_STR);
-            $stmt->bindValue(':last_name', $_POST['last_name'], PDO::PARAM_STR);
-            $stmt->bindValue(':email', $_POST['email'], PDO::PARAM_STR);
-            $stmt->bindValue(':password', password_hash($_POST['password'], PASSWORD_DEFAULT), PDO::PARAM_STR);
-            $stmt->bindValue(':role', $_POST['role'], PDO::PARAM_STR);
+// // Si le formulaire est soumis
+// if ($_SERVER["REQUEST_METHOD"] == "POST") {
+//     if (isset($_POST['first_name'], $_POST['last_name'], $_POST['email'], $_POST['role'])) {
+//         try {
+//             $stmt = $pdo->prepare("UPDATE user SET first_name = :first_name, last_name = :last_name, email = :email,password = :password ,role = :role WHERE id = :id");
+//             $stmt->bindValue(':id', intval($_POST['id']), PDO::PARAM_INT);
+//             $stmt->bindValue(':first_name', $_POST['first_name'], PDO::PARAM_STR);
+//             $stmt->bindValue(':last_name', $_POST['last_name'], PDO::PARAM_STR);
+//             $stmt->bindValue(':email', $_POST['email'], PDO::PARAM_STR);
+//             $stmt->bindValue(':password', password_hash($_POST['password'], PASSWORD_DEFAULT), PDO::PARAM_STR);
+//             $stmt->bindValue(':role', $_POST['role'], PDO::PARAM_STR);
 
-            $stmt->execute();
+//             $stmt->execute();
 
-            // Redirection après mise à jour
-            header('Location: index.php');
-            exit;
-        } catch (PDOException $e) {
-            echo "Erreur de mise à jour : " . $e->getMessage();
-        }
-    } else {
-        echo "Erreur : Veuillez remplir tous les champs.";
-    }
-}
+//             // Redirection après mise à jour
+//             header('Location: index.php');
+//             exit;
+//         } catch (PDOException $e) {
+//             echo "Erreur de mise à jour : " . $e->getMessage();
+//         }
+//     } else {
+//         echo "Erreur : Veuillez remplir tous les champs.";
+//     }
+// }
 ?>
 
 <!DOCTYPE html>

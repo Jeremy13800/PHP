@@ -2,12 +2,13 @@
 session_start();
 
 $_SESSION['isConnected'] = 'On';
+// recuperation de la base de donnée
+require_once 'Database.php';
 
 //recuperation de la classe
 require_once 'userClass.php';
 
-// Connexion à la base de données
-require 'Database.php';
+
 
 // Initialisation de l'objet 
 $superUser = new User($pdo);
@@ -15,23 +16,9 @@ $superUser = new User($pdo);
 // Recuperes tous les utilisateurs
 $rows = $superUser->getAllUsers();
 
-
-// try {
-//     $stmt = $pdo->prepare("SELECT * FROM user");
-//     $stmt->execute();
-
-//     // Récupérer les résultats
-//     $resultats = $stmt->fetchAll(PDO::FETCH_ASSOC);
-//     // var_dump($resultats);
-//     $rows = $resultats;
 // fermeture de la connextion
 $pdo = null;
-//     // foreach ($resultats as $row) {
-//     //     // Traiter chaque ligne de résultat
-//     // }
-// } catch (PDOException $e) {
-//     echo "Erreur de lecture : " . $e->getMessage();
-// }
+
 
 
 ?>
@@ -97,7 +84,7 @@ $pdo = null;
 
     </table>
     <h2>Creation d'un utilisateur</h2>
-    <form action="create_user.php" method="post">
+    <form action="create_user.php" method="POST">
         <label for="first-name">First Name</label>
         <input type="text" name="first-name" id="first-name" placeholder="Marty"><br>
         <label for="last-name">Last Name</label>
